@@ -86,6 +86,16 @@ export const ChatView: React.FC<ChatViewProps> = ({
     }
   }, [input]);
 
+  // Reset input and focus when starting a new chat or switching conversation
+  useEffect(() => {
+    setInput('');
+    setSelectedImage(null);
+    setErrorInfo(null);
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [conversation?.id]);
+
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -253,7 +263,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
               What can I help you with?
             </h2>
             <p className="mt-2 text-sm text-slate-500 max-w-md">
-              Nexora AI is ready to chat, write code, analyze images, draft documents, or solve complex problems.
+              Qubixa AI is ready to chat, write code, analyze images, draft documents, or solve complex problems.
             </p>
 
             {/* Quick Starter Suggestions */}
@@ -382,7 +392,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
                   <div className="w-2 h-2 rounded-full bg-blue-500 animate-bounce" style={{ animationDelay: '0ms' }} />
                   <div className="w-2 h-2 rounded-full bg-blue-500 animate-bounce" style={{ animationDelay: '150ms' }} />
                   <div className="w-2 h-2 rounded-full bg-blue-500 animate-bounce" style={{ animationDelay: '300ms' }} />
-                  <span className="ml-2 text-xs text-slate-400 font-medium">Nexora is thinking...</span>
+                  <span className="ml-2 text-xs text-slate-400 font-medium">Qubixa is thinking...</span>
                 </div>
               </div>
             )}
@@ -496,7 +506,7 @@ export const ChatView: React.FC<ChatViewProps> = ({
 
         <div className="text-center mt-2">
           <p className="text-[11px] text-slate-400">
-            Nexora AI runs on server-side Gemini 3.8 Flash · Responses should be verified
+            Qubixa AI runs on server-side Gemini 3.8 Flash · Free for everyone · Responses should be verified
           </p>
         </div>
       </div>

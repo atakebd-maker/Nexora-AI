@@ -33,7 +33,7 @@ export const VideoToolsView: React.FC = () => {
     setIsLoading(true);
     setError(null);
 
-    const systemInstruction = `You are Nexora AI Executive Cinematographer and Video Prompt Director. You write high-precision video generation prompts compatible with state-of-the-art models like Google Veo 3.1, Runway Gen-3, and Sora.`;
+    const systemInstruction = `You are Qubixa AI Executive Cinematographer and Video Prompt Director. You write high-precision video generation prompts compatible with state-of-the-art models like Google Veo 3.1, Runway Gen-3, and Sora.`;
 
     const prompt = `Video Concept: "${videoConcept}"
 Camera Motion: ${cameraMotion}

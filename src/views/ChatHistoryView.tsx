@@ -33,7 +33,7 @@ export const ChatHistoryView: React.FC<ChatHistoryViewProps> = ({
     const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(conversations, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute('href', dataStr);
-    downloadAnchor.setAttribute('download', `nexora-chat-backup-${Date.now()}.json`);
+    downloadAnchor.setAttribute('download', `qubixa-chat-backup-${Date.now()}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
@@ -126,7 +126,7 @@ export const ChatHistoryView: React.FC<ChatHistoryViewProps> = ({
               {searchQuery ? 'No matching conversations found' : 'No saved conversations yet'}
             </p>
             <p className="text-[11px] text-slate-400 mt-1">
-              Start chatting with Nexora AI and your conversations will be automatically archived here.
+              Start chatting with Qubixa AI and your conversations will be automatically archived here.
             </p>
           </div>
         ) : (

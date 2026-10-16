@@ -64,7 +64,7 @@ Format using clean markdown with attractive headings, bullet points where suitab
 
     try {
       const output = await generateAiText(prompt, {
-        systemInstruction: `You are Nexora AI Writing Assistant, a master copywriter and editorial writer known for engaging, error-free, and persuasive content.`,
+        systemInstruction: `You are Qubixa AI Writing Assistant, a master copywriter and editorial writer known for engaging, error-free, and persuasive content.`,
         modelType: 'writing',
       });
       setResult(output);
@@ -92,7 +92,7 @@ Format using clean markdown with attractive headings, bullet points where suitab
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `nexora-writing-${Date.now()}.md`;
+    a.download = `qubixa-writing-${Date.now()}.md`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -305,7 +305,7 @@ Format using clean markdown with attractive headings, bullet points where suitab
                 <div className="h-full flex flex-col items-center justify-center text-slate-400 py-12 space-y-3">
                   <RefreshCw className="w-6 h-6 animate-spin text-blue-600" />
                   <p className="text-xs font-medium text-slate-500">
-                    Crafting {contentType.replace('_', ' ')} with Nexora AI...
+                    Crafting {contentType.replace('_', ' ')} with Qubixa AI...
                   </p>
                 </div>
               ) : result ? (

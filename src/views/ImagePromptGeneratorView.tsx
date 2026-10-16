@@ -59,7 +59,7 @@ export const ImagePromptGeneratorView: React.FC<ImagePromptGeneratorProps> = ({
     setIsLoading(true);
     setError(null);
 
-    const systemInstruction = `You are Nexora AI Image Prompt Specialist. You engineer world-class, extremely descriptive English prompts for generative image models (Midjourney, Stable Diffusion, Gemini Imagen). 
+    const systemInstruction = `You are Qubixa AI Image Prompt Specialist. You engineer world-class, extremely descriptive English prompts for generative image models (Midjourney, Stable Diffusion, Gemini Imagen). 
 Return your answer in the following strict JSON format:
 {
   "masterPrompt": "a single detailed paragraph containing the subject, environment, atmospheric details, artistic rendering style, color palette, lighting, textures, and camera specifications",

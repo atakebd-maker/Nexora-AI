@@ -53,12 +53,12 @@ export const Header: React.FC<HeaderProps> = ({
 
         <div className="flex items-center gap-2">
           <h1 className="text-base font-semibold text-slate-900 tracking-tight">
-            {TOOL_TITLES[activeItem] || 'Nexora AI'}
+            {TOOL_TITLES[activeItem] || 'Qubixa AI'}
           </h1>
           {activeItem === 'chat' && (
             <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-blue-50 text-blue-700 border border-blue-100">
               <Sparkles className="w-3 h-3 text-blue-600" />
-              Pro Intelligence
+              100% Free AI
             </span>
           )}
         </div>
@@ -68,8 +68,9 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="flex items-center gap-2 sm:gap-3">
         {!isConfigured && (
           <button
+            type="button"
             onClick={onOpenHelp}
-            className="text-xs text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2.5 py-1 rounded-lg transition-colors font-medium flex items-center gap-1.5"
+            className="text-xs text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2.5 py-1 rounded-lg transition-colors font-medium flex items-center gap-1.5 cursor-pointer"
             title="Click to view API key setup instructions"
           >
             <span>🇧🇩 Setup Required</span>
@@ -77,8 +78,10 @@ export const Header: React.FC<HeaderProps> = ({
         )}
 
         <button
+          type="button"
           onClick={onNewChat}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+          title="Start a new chat conversation"
         >
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">New Chat</span>

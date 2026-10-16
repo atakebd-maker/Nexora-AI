@@ -1,5 +1,5 @@
 /**
- * Nexora AI — Central Server-Side Configuration
+ * Qubixa AI — Central Server-Side Configuration
  *
  * This file houses the central configuration for Google Gemini AI models and API credentials.
  * No client/browser code ever has access to this file or any secrets stored here.

@@ -25,7 +25,7 @@ export const MathAssistantView: React.FC = () => {
     setIsLoading(true);
     setError(null);
 
-    const systemInstruction = `You are Nexora AI Senior Mathematics and STEM Specialist. 
+    const systemInstruction = `You are Qubixa AI Senior Mathematics and STEM Specialist. 
 Solve the problem with impeccable rigor.
 Your answer MUST follow this exact structure:
 1. **Given & Identified Variables**

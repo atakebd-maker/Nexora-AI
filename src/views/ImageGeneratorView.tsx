@@ -66,7 +66,7 @@ export const ImageGeneratorView: React.FC<ImageGeneratorViewProps> = ({
     if (!generatedImage) return;
     const a = document.createElement('a');
     a.href = generatedImage;
-    a.download = `nexora-image-${Date.now()}.png`;
+    a.download = `qubixa-image-${Date.now()}.png`;
     a.click();
   };
 

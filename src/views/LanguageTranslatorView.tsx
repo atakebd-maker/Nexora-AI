@@ -4,22 +4,27 @@ import { generateAiText, ApiError } from '../services/api.ts';
 import { AdBanner } from '../components/AdBanner.tsx';
 
 const LANGUAGES = [
-  { code: 'auto', name: 'Auto Detect' },
-  { code: 'bn', name: 'Bengali (বাংলা) 🇧🇩' },
-  { code: 'en', name: 'English' },
-  { code: 'es', name: 'Spanish (Español)' },
-  { code: 'fr', name: 'French (Français)' },
-  { code: 'de', name: 'German (Deutsch)' },
-  { code: 'ar', name: 'Arabic (العربية)' },
-  { code: 'hi', name: 'Hindi (हिन्दी)' },
-  { code: 'ja', name: 'Japanese (日本語)' },
-  { code: 'zh', name: 'Chinese (中文)' },
-  { code: 'ru', name: 'Russian (Русский)' },
-  { code: 'pt', name: 'Portuguese (Português)' },
-  { code: 'it', name: 'Italian (Italiano)' },
-  { code: 'ko', name: 'Korean (한국어)' },
-  { code: 'tr', name: 'Turkish (Türkçe)' },
-  { code: 'ur', name: 'Urdu (اردو)' },
+  { code: 'auto', name: 'Auto Detect', flag: '🌐' },
+  { code: 'bn', name: 'Bengali (বাংলা)', flag: '🇧🇩' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'es', name: 'Spanish (Español)', flag: '🇪🇸' },
+  { code: 'fr', name: 'French (Français)', flag: '🇫🇷' },
+  { code: 'de', name: 'German (Deutsch)', flag: '🇩🇪' },
+  { code: 'ar', name: 'Arabic (العربية)', flag: '🇸🇦' },
+  { code: 'hi', name: 'Hindi (हिन्दी)', flag: '🇮🇳' },
+  { code: 'ja', name: 'Japanese (日本語)', flag: '🇯🇵' },
+  { code: 'zh', name: 'Chinese (中文)', flag: '🇨🇳' },
+  { code: 'ru', name: 'Russian (Русский)', flag: '🇷🇺' },
+  { code: 'pt', name: 'Portuguese (Português)', flag: '🇧🇷' },
+  { code: 'it', name: 'Italian (Italiano)', flag: '🇮🇹' },
+  { code: 'ko', name: 'Korean (한국어)', flag: '🇰🇷' },
+  { code: 'tr', name: 'Turkish (Türkçe)', flag: '🇹🇷' },
+  { code: 'ur', name: 'Urdu (اردو)', flag: '🇵🇰' },
+  { code: 'id', name: 'Indonesian (Bahasa)', flag: '🇮🇩' },
+  { code: 'vi', name: 'Vietnamese (Tiếng Việt)', flag: '🇻🇳' },
+  { code: 'ms', name: 'Malay (Bahasa Melayu)', flag: '🇲🇾' },
+  { code: 'th', name: 'Thai (ไทย)', flag: '🇹🇭' },
+  { code: 'nl', name: 'Dutch (Nederlands)', flag: '🇳🇱' },
 ];
 
 export const LanguageTranslatorView: React.FC = () => {
@@ -56,10 +61,12 @@ export const LanguageTranslatorView: React.FC = () => {
     setIsLoading(true);
     setError(null);
 
-    const sourceName = LANGUAGES.find((l) => l.code === sourceLang)?.name || 'Auto Detect';
-    const targetName = LANGUAGES.find((l) => l.code === targetLang)?.name || 'Bengali';
+    const sourceObj = LANGUAGES.find((l) => l.code === sourceLang);
+    const targetObj = LANGUAGES.find((l) => l.code === targetLang);
+    const sourceName = sourceObj ? `${sourceObj.flag} ${sourceObj.name}` : 'Auto Detect';
+    const targetName = targetObj ? `${targetObj.flag} ${targetObj.name}` : '🇧🇩 Bengali';
 
-    const systemInstruction = `You are Nexora AI Master Polyglot and Translator. Provide accurate, culturally natural translations preserving nuance, tone, and idioms. 
+    const systemInstruction = `You are Qubixa AI Master Polyglot and Translator. Provide accurate, culturally natural translations preserving nuance, tone, and idioms. 
 Respond in strict JSON with no markdown wrapping:
 {
   "translation": "translated text in target language",
@@ -142,7 +149,7 @@ Text to Translate:
           >
             {LANGUAGES.map((l) => (
               <option key={l.code} value={l.code}>
-                {l.name}
+                {l.flag} {l.name}
               </option>
             ))}
           </select>
@@ -169,7 +176,7 @@ Text to Translate:
           >
             {LANGUAGES.filter((l) => l.code !== 'auto').map((l) => (
               <option key={l.code} value={l.code}>
-                {l.name}
+                {l.flag} {l.name}
               </option>
             ))}
           </select>

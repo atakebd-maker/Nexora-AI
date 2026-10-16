@@ -126,14 +126,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="h-16 px-5 border-b border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-sm font-bold text-sm tracking-tight">
-              N
+              Q
             </div>
             <div>
               <span className="font-bold text-slate-900 text-base tracking-tight flex items-center gap-1.5">
-                Nexora <span className="text-blue-600">AI</span>
+                Qubixa <span className="text-blue-600">AI</span>
               </span>
               <span className="block text-[10px] text-slate-400 font-medium uppercase tracking-wider">
-                All-in-One Platform
+                100% Free AI Platform
               </span>
             </div>
           </div>

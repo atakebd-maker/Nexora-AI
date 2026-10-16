@@ -30,7 +30,7 @@ export const SocialMediaCaptionView: React.FC = () => {
 
     const platformObj = PLATFORMS.find((p) => p.id === platform);
 
-    const systemInstruction = `You are Nexora AI Viral Social Media Strategist. You write authentic, scroll-stopping copy tailored precisely to the selected social platform's algorithm and cultural norms.`;
+    const systemInstruction = `You are Qubixa AI Viral Social Media Strategist. You write authentic, scroll-stopping copy tailored precisely to the selected social platform's algorithm and cultural norms.`;
 
     const prompt = `Platform: ${platformObj?.label} (${platformObj?.desc})
 Post Subject: "${topic}"

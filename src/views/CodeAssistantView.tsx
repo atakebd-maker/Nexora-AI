@@ -41,7 +41,7 @@ export const CodeAssistantView: React.FC = () => {
     setIsLoading(true);
     setError(null);
 
-    let instruction = `You are Nexora AI Senior Software Engineer. You write clean, type-safe, maintainable, modern, and production-ready code with concise explanations.`;
+    let instruction = `You are Qubixa AI Senior Software Engineer. You write clean, type-safe, maintainable, modern, and production-ready code with concise explanations.`;
     
     let userPrompt = `Language: ${language}\nTask: ${mode.toUpperCase()}\n`;
     if (prompt) userPrompt += `Instructions/Requirements:\n${prompt}\n\n`;

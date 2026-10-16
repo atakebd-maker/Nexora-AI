@@ -45,10 +45,63 @@ function getAiClient(): GoogleGenAI {
 }
 
 /**
+ * Helper to call Gemini with automatic retry and model failover for temporary 503 / 429 spikes
+ */
+async function generateContentWithRetry(
+  ai: GoogleGenAI,
+  params: {
+    model: string;
+    contents: any;
+    config?: any;
+  },
+  maxRetries = 2
+) {
+  let lastError: any;
+  // Models to try if the primary model is overloaded (e.g. 503 high demand)
+  const modelsToTry = [params.model];
+  if (params.model === 'gemini-3.8-flash') {
+    // gemini-3.1-flash-lite has huge throughput and serves as an instant fallback during 503 spikes
+    modelsToTry.push('gemini-3.1-flash-lite');
+  }
+
+  for (const currentModel of modelsToTry) {
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const response = await ai.models.generateContent({
+          ...params,
+          model: currentModel,
+        });
+        return response;
+      } catch (err: any) {
+        lastError = err;
+        const msg = String(err?.message || err);
+        const isTransient =
+          msg.includes('503') ||
+          msg.includes('high demand') ||
+          msg.includes('UNAVAILABLE') ||
+          msg.includes('overloaded') ||
+          msg.includes('429') ||
+          msg.includes('RESOURCE_EXHAUSTED');
+
+        if (isTransient && attempt < maxRetries) {
+          const delay = (attempt + 1) * 750;
+          console.warn(`[Qubixa] Model ${currentModel} busy (attempt ${attempt + 1}/${maxRetries + 1}). Retrying in ${delay}ms...`);
+          await new Promise((resolve) => setTimeout(resolve, delay));
+          continue;
+        }
+        break; // If not transient, try next model or throw
+      }
+    }
+  }
+
+  throw lastError;
+}
+
+/**
  * Format error response nicely for the client
  */
 function handleApiError(err: unknown, res: express.Response) {
-  console.error('[Nexora Server Error]:', err);
+  console.error('[Qubixa Server Error]:', err);
   const message = err instanceof Error ? err.message : String(err);
   
   if (message.includes('MISSING_API_KEY')) {
@@ -67,10 +120,17 @@ function handleApiError(err: unknown, res: express.Response) {
     });
   }
 
-  if (message.includes('RESOURCE_EXHAUSTED') || message.includes('quota')) {
+  if (message.includes('503') || message.includes('high demand') || message.includes('UNAVAILABLE')) {
+    return res.status(503).json({
+      error: 'SERVER_HIGH_DEMAND',
+      message: "গুগল সার্ভারে সাময়িক অতিরিক্ত ট্রাফিক (High Demand) রয়েছে। এটি কয়েক সেকেন্ডের মধ্যে স্বাভাবিক হয়ে যায় — দয়া করে আরেকবার চেষ্টা করুন।",
+    });
+  }
+
+  if (message.includes('RESOURCE_EXHAUSTED') || message.includes('quota') || message.includes('429')) {
     return res.status(429).json({
       error: 'RATE_LIMIT_EXCEEDED',
-      message: "Gemini API rate limit or quota exceeded. Please wait a moment or try again later.",
+      message: "Gemini API rate limit or quota reached. Please wait a few seconds and try again.",
     });
   }
 
@@ -91,7 +151,7 @@ app.get('/api/status', (_req, res) => {
   const configured = isApiKeyConfigured();
   res.json({
     status: 'online',
-    appName: 'Nexora AI',
+    appName: 'Qubixa AI',
     configured,
     models: AI_MODELS,
     setupFile: 'server/config.ts (Line 11)',
@@ -111,7 +171,6 @@ app.post('/api/chat', async (req, res) => {
     const ai = getAiClient();
     
     // Convert client chat messages into Gemini contents format
-    // Format: contents can be array of Content objects or string
     const contents = messages.map((m: { role: string; content: string; image?: { mimeType: string; data: string } }) => {
       const parts: any[] = [];
       if (m.image && m.image.data) {
@@ -131,11 +190,11 @@ app.post('/api/chat', async (req, res) => {
       };
     });
 
-    const response = await ai.models.generateContent({
+    const response = await generateContentWithRetry(ai, {
       model: AI_MODELS.chat,
       contents,
       config: {
-        systemInstruction: systemInstruction || "You are Nexora AI, a brilliant, professional, helpful, and concise AI platform. Format your responses with clean Markdown, clear headings, bullet points, and code blocks with language identifiers where appropriate.",
+        systemInstruction: systemInstruction || "You are Qubixa AI, a brilliant, professional, helpful, and concise AI platform. Format your responses with clean Markdown, clear headings, bullet points, and code blocks with language identifiers where appropriate.",
         temperature: typeof temperature === 'number' ? temperature : 0.7,
       },
     });
@@ -160,7 +219,7 @@ app.post('/api/generate-text', async (req, res) => {
     const ai = getAiClient();
     const modelToUse = (AI_MODELS as Record<string, string>)[modelType] || AI_MODELS.writing;
 
-    const response = await ai.models.generateContent({
+    const response = await generateContentWithRetry(ai, {
       model: modelToUse,
       contents: prompt,
       config: {
@@ -188,7 +247,7 @@ app.post('/api/analyze-image', async (req, res) => {
 
     const ai = getAiClient();
 
-    let systemInstruction = "You are Nexora AI Image Analyzer. Provide detailed, insightful visual analysis.";
+    let systemInstruction = "You are Qubixa AI Image Analyzer. Provide detailed, insightful visual analysis.";
     if (analysisType === 'ocr') {
       systemInstruction = "You are a high-precision OCR and text extraction specialist. Extract all visible text accurately with layout preservation.";
     } else if (analysisType === 'critique') {
@@ -209,7 +268,7 @@ app.post('/api/analyze-image', async (req, res) => {
       },
     ];
 
-    const response = await ai.models.generateContent({
+    const response = await generateContentWithRetry(ai, {
       model: AI_MODELS.vision,
       contents: { parts },
       config: { systemInstruction },
@@ -345,7 +404,7 @@ app.post('/api/summarize-doc', async (req, res) => {
 
     const ai = getAiClient();
 
-    let instruction = `You are Nexora AI Document Assistant. You are analyzing "${title}". Provide a clear, highly structured summary with key takeaways and actionable insights.`;
+    let instruction = `You are Qubixa AI Document Assistant. You are analyzing "${title}". Provide a clear, highly structured summary with key takeaways and actionable insights.`;
     if (format === 'executive') {
       instruction += ' Write a concise executive summary suitable for leadership.';
     } else if (format === 'tldr') {
@@ -358,7 +417,7 @@ app.post('/api/summarize-doc', async (req, res) => {
       ? `Document Title: ${title}\n\nDocument Text:\n${text.slice(0, 50000)}\n\nUser Question: ${query}`
       : `Document Title: ${title}\n\nDocument Text:\n${text.slice(0, 50000)}\n\nPlease summarize this document effectively in ${format} format.`;
 
-    const response = await ai.models.generateContent({
+    const response = await generateContentWithRetry(ai, {
       model: AI_MODELS.writing,
       contents: prompt,
       config: {
@@ -384,7 +443,7 @@ async function setupVite() {
       appType: 'spa',
     });
     app.use(vite.middlewares);
-    console.log(`[Nexora AI] Vite development middleware mounted.`);
+    console.log(`[Qubixa AI] Vite development middleware mounted.`);
   } else {
     const distPath = path.resolve(__dirname, 'dist');
     app.use(express.static(distPath));
@@ -397,7 +456,7 @@ async function setupVite() {
 setupVite().then(() => {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`================================================================`);
-    console.log(`🚀 Nexora AI server running on http://0.0.0.0:${PORT}`);
+    console.log(`🚀 Qubixa AI server running on http://0.0.0.0:${PORT}`);
     console.log(`🇧🇩 Gemini API key setup location: server/config.ts (Line 11)`);
     console.log(`Status: ${isApiKeyConfigured() ? '✅ API Key configured' : '⚠️ API Key pending (see server/config.ts)'}`);
     console.log(`================================================================`);

@@ -36,7 +36,7 @@ export const YouTubeScriptGeneratorView: React.FC = () => {
 
     const durDesc = DURATIONS.find((d) => d.id === duration)?.label;
 
-    const systemInstruction = `You are Nexora AI Viral YouTube Producer & Scriptwriter. You engineer scripts with extreme retention mechanics, pattern interrupts, sensory b-roll cues, high-CTR titles, and complete metadata.`;
+    const systemInstruction = `You are Qubixa AI Viral YouTube Producer & Scriptwriter. You engineer scripts with extreme retention mechanics, pattern interrupts, sensory b-roll cues, high-CTR titles, and complete metadata.`;
 
     const prompt = `Generate a complete YouTube production package for the following video:
 Topic/Premise: "${topic}"

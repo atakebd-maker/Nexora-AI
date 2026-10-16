@@ -1,16 +1,17 @@
 /**
- * Nexora AI — Local Conversation Storage
+ * Qubixa AI — Local Conversation Storage
  * Provides persistent local state for conversations and user preferences.
  */
 
 import { Conversation, ChatMessage } from '../types.ts';
 
-const STORAGE_KEY = 'nexora_conversations_v1';
-const ACTIVE_CONV_KEY = 'nexora_active_conversation_id';
+const STORAGE_KEY = 'qubixa_conversations_v1';
+const FALLBACK_KEY = 'nexora_conversations_v1';
+const ACTIVE_CONV_KEY = 'qubixa_active_conversation_id';
 
 export function getStoredConversations(): Conversation[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(FALLBACK_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];

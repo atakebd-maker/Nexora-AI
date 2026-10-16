@@ -53,7 +53,7 @@ export const StudyAssistantView: React.FC = () => {
 
     try {
       if (mode === 'quiz') {
-        const systemInstruction = `You are Nexora AI Academic Examiner. Output exactly 4 multiple-choice questions on the topic in strict JSON format:
+        const systemInstruction = `You are Qubixa AI Academic Examiner. Output exactly 4 multiple-choice questions on the topic in strict JSON format:
 {
   "questions": [
     {
@@ -79,7 +79,7 @@ Only output raw JSON without markdown code fences.`;
           throw new Error('Invalid quiz response structure');
         }
       } else if (mode === 'flashcards') {
-        const systemInstruction = `You are Nexora AI Study Coach. Create 6 high-yield flashcards in strict JSON format:
+        const systemInstruction = `You are Qubixa AI Study Coach. Create 6 high-yield flashcards in strict JSON format:
 {
   "flashcards": [
     {
@@ -115,7 +115,7 @@ Only output raw JSON without markdown code fences.`;
             : `Explain the concept "${topic}" for a ${level} audience. Use intuitive real-world analogies, step-by-step logic, and address the "why it matters" factor.`;
 
         const output = await generateAiText(prompt, {
-          systemInstruction: 'You are Nexora AI Master Academic Tutor, celebrated for clarity, visual structure, and pedagogical brilliance.',
+          systemInstruction: 'You are Qubixa AI Master Academic Tutor, celebrated for clarity, visual structure, and pedagogical brilliance.',
           temperature: 0.4,
         });
         setTextResult(output);

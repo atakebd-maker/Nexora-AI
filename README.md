@@ -1,6 +1,6 @@
-# Nexora AI — A Professional All-in-One AI Platform
+# Qubixa AI — A Professional All-in-One AI Platform
 
-Nexora AI is a production-grade, responsive AI platform inspired by ChatGPT and modern creative suites. It combines a state-of-the-art conversational interface with 16 specialized AI productivity tools in a single unified web application.
+Qubixa AI is a production-grade, 100% free, responsive AI platform inspired by ChatGPT and modern creative suites. It combines a state-of-the-art conversational interface with 16 specialized AI productivity tools in a single unified web application.
 
 ---
 

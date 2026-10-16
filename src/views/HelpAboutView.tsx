@@ -11,9 +11,9 @@ export const HelpAboutView: React.FC = () => {
           <HelpCircle className="w-4 h-4" />
           <span>Documentation & Architecture</span>
         </div>
-        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Help & About Nexora AI</h2>
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Help & About Qubixa AI</h2>
         <p className="text-sm text-slate-500 mt-1">
-          Everything you need to know about setting up, configuring, and deploying Nexora AI.
+          Everything you need to know about setting up, configuring, and deploying Qubixa AI.
         </p>
       </div>
 
@@ -183,16 +183,16 @@ export const HelpAboutView: React.FC = () => {
           </div>
 
           <div className="pt-3 space-y-1">
-            <p className="font-bold text-slate-900">Does Nexora AI support Bengali (বাংলা 🇧🇩)?</p>
+            <p className="font-bold text-slate-900">Does Qubixa AI support Bengali (বাংলা 🇧🇩)?</p>
             <p>
-              Yes! The Language Translator and Conversational AI have deep multilingual comprehension for Bengali (বাংলা) as well as English, Hindi, Arabic, Spanish, French, and over 15 world languages.
+              Yes! The Language Translator and Conversational AI have deep multilingual comprehension for Bengali (বাংলা) as well as English, Hindi, Arabic, Spanish, French, and over 20 world languages with national flags.
             </p>
           </div>
 
           <div className="pt-3 space-y-1">
-            <p className="font-bold text-slate-900">How do I monetize with Google AdSense?</p>
+            <p className="font-bold text-slate-900">Is Qubixa AI 100% free?</p>
             <p>
-              Nexora AI includes responsive advertisement placement containers (<code className="bg-slate-100 px-1 py-0.5 rounded font-mono">&lt;AdBanner /&gt;</code>) formatted according to IAB guidelines. Simply replace the placeholder div in <code className="bg-slate-100 px-1 py-0.5 rounded font-mono">src/components/AdBanner.tsx</code> with your Google AdSense unit script when approved.
+              Yes! All 16 AI tools, multimodal vision analyzer, code assistant, and chat capabilities are completely free to use without subscriptions.
             </p>
           </div>
         </div>

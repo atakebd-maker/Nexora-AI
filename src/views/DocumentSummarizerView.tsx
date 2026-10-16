@@ -36,7 +36,7 @@ Use clean Markdown with bold keywords for quick reading.`;
 
     try {
       const output = await generateAiText(prompt, {
-        systemInstruction: 'You are Nexora AI Executive Summarizer. You distill massive articles, transcripts, and reports into clear, dense, actionable briefings.',
+        systemInstruction: 'You are Qubixa AI Executive Summarizer. You distill massive articles, transcripts, and reports into clear, dense, actionable briefings.',
         temperature: 0.3,
       });
       setResult(output);

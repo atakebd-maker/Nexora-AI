@@ -72,10 +72,16 @@ export default function App() {
     conversations.find((c) => c.id === activeConversationId) || null;
 
   const handleNewChat = () => {
+    if (activeConversation && activeConversation.messages.length === 0) {
+      setActiveItem('chat');
+      setIsSidebarOpen(false);
+      return;
+    }
     const newConv = createNewConversation('New Conversation');
     setConversations(getStoredConversations());
     setActiveConvId(newConv.id);
     setActiveItem('chat');
+    setIsSidebarOpen(false);
   };
 
   const handleSelectConversation = (id: string) => {

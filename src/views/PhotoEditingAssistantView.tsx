@@ -81,7 +81,7 @@ export const PhotoEditingAssistantView: React.FC = () => {
     if (!editedImage) return;
     const a = document.createElement('a');
     a.href = editedImage;
-    a.download = `nexora-edited-${Date.now()}.png`;
+    a.download = `qubixa-edited-${Date.now()}.png`;
     a.click();
   };
 
@@ -283,7 +283,7 @@ export const PhotoEditingAssistantView: React.FC = () => {
                   <Wand2 className="w-10 h-10 text-slate-300 mb-2 stroke-[1.5]" />
                   <p className="text-xs font-medium text-slate-600">No edits applied yet</p>
                   <p className="text-[11px] text-slate-400 mt-1 max-w-xs">
-                    Upload a base photo, type your desired modifications, and Nexora will render the edited version.
+                    Upload a base photo, type your desired modifications, and Qubixa will render the edited version.
                   </p>
                 </div>
               )}

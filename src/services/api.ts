@@ -34,7 +34,7 @@ export async function fetchServerStatus(): Promise<ServerStatus> {
     console.warn('Server status check failed:', err);
     return {
       status: 'offline',
-      appName: 'Nexora AI',
+      appName: 'Qubixa AI',
       configured: false,
       models: {},
       setupFile: 'server/config.ts (Line 11)',
