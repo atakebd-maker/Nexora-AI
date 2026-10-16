@@ -1,0 +1,6 @@
+{
+  "name": "Nexora AI",
+  "description": "Nexora AI — A Professional All-in-One AI Platform featuring intelligent chat, writing assistant, vision analyzer, code assistant, and productivity tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
